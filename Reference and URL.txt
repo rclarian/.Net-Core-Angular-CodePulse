@@ -2,6 +2,9 @@ Youtube: https://www.youtube.com/watch?v=eNVbiIsoEUw&t=6218s&ab_channel=SameerSa
 
 Time to finish: 1:10:26 / 2:46:46
 
+--Angular
+*ng serve --open > to open in browser
+
 REST - representational state transfer - stye of architecture for building web services
 Resource - 
 Stateless - 
