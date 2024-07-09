@@ -24,7 +24,7 @@ export class AddCategoryComponent {
     this.categoryService.addCategory(this.model)
     .subscribe({
       next: (response) => {
-        console.log('Success: ' + response);
+        console.log('This was successful save!');
       },
       error: (error) => {
         console.log('Error: ' + error);
