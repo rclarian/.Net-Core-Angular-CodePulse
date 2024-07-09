@@ -26,3 +26,9 @@ Stateless -
 * Microsoft.EntityFrameworkCore.Tools
 
 --Dependency Injection
+
+--Run EntityFramework
+* Tools > Nuget Package Manager > Nuget Package Console
+- 2 Commands
+* Add-Migration "Name of Migration"
+* Update-Database
