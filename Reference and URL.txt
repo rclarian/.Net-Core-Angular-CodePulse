@@ -43,7 +43,15 @@ Stateless -
 *security
 *versioning
 
-
+--Repository Pattern
+*Design pattern to separate the data access layer from the applicatin
+*Provides interface without exposing implementation
+*Helps create abstraction
+-Benefits
+*Decoupling
+*Consistency
+*Performance
+*Multiple data sources(switching) 
 
 
 
