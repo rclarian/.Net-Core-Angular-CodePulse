@@ -21,3 +21,8 @@ Stateless -
 *PATCH
 *OPTIONS
 
+--on Project Dependencies (right click > Manage Nuget Packages)
+* Microsoft.EntityFrameworkCore.SqlServer
+* Microsoft.EntityFrameworkCore.Tools
+
+--Dependency Injection
