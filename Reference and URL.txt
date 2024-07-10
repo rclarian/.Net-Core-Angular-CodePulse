@@ -31,7 +31,7 @@ Stateless -
 
 --Dependency Injection
 
---Run EntityFramework
+--#24.Run EntityFramework Core Migrations
 * Tools > Nuget Package Manager > Nuget Package Console
 - 2 Commands
 * Add-Migration "Name of Migration"
