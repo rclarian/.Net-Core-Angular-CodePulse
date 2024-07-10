@@ -56,8 +56,17 @@ Stateless -
 *Performance
 *Multiple data sources(switching) 
 
+----Need to install for angular
+ESLint by Microsoft
+Angular Snippets (version16) by John Papa
+CSS Formatter by Martin Aeschlimann
+Angular Language Service by Angular
+IntelliSense for CSS class name in HTML BY Zignd
+Path Intellisense by Christian Kohler
 
-
+GutHub Project
+https://github.com/sameer8saini/CodePulse.API
+https://github.com/sameer8saini/CodePulse.UI
 
 
 
