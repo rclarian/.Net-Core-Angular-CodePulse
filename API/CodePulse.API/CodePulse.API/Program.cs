@@ -18,7 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CodePulseConnectionString"));
 });
 
-//Implemention injection 
+//Implemention injection //#29.Change POST Category Action method to use Repository
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();

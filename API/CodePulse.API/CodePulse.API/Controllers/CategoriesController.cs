@@ -21,11 +21,6 @@ namespace CodePulse.API.Controllers
             this._categoryRepository = categoryRepository;
         }
 
-        //public CategoriesController(ApplicationDbContext dbContext)
-        //{
-        //    this.dbContext = dbContext;
-        //}
-
         //#27.Create POST Categories action method
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
@@ -37,9 +32,7 @@ namespace CodePulse.API.Controllers
                 UrlHandle = request.UrlHandle
             };
 
-            //await dbContext.Categories.AddAsync(category);
-            //await dbContext.SaveChangesAsync();
-
+            //#29.Change POST Category Action method to use Repository
             await _categoryRepository.CreateAsync(category);
 
             //Map domain model to DTO
