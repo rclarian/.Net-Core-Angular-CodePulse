@@ -2,6 +2,7 @@
 {
     public class BlogPost
     {
+        //#19.Create Domain models
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
