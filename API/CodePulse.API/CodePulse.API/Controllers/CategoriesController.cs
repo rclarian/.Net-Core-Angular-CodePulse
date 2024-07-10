@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodePulse.API.Controllers
 {
+    //#25.Create new controller
     //https://localhost:xxxx/api/categories
     [Route("api/[controller]")]
     [ApiController]
