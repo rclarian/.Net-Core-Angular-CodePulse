@@ -1,9 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AddCategoryRequest } from '../models/add-category-request-model';
 import { CategoryService } from '../services/category.service';
-import { response } from 'express';
-import { error } from 'console';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -13,10 +12,9 @@ import { Subscription } from 'rxjs';
 export class AddCategoryComponent implements OnDestroy{
 
   model: AddCategoryRequest;
-  private addCategorySubscription?: Subscription //39.Unsubscribe from Observables
+  private addCategorySubscription?: Subscription
 
-  //#37.Create Angular Services
-  constructor(private categoryService: CategoryService){
+  constructor(private categoryService: CategoryService, private router: Router){
     this.model = {
       name: '',
       urlHandle: ''
@@ -27,7 +25,8 @@ export class AddCategoryComponent implements OnDestroy{
     this.addCategorySubscription = this.categoryService.addCategory(this.model)
     .subscribe({
       next: (response) => {
-        console.log('This was successful save!');
+        //console.log('This was successful save!');
+        this.router.navigateByUrl('/admin/categories');
       },
       error: (error) => {
         console.log('Error: ' + error);
@@ -35,7 +34,6 @@ export class AddCategoryComponent implements OnDestroy{
     })
   }
 
-  //39.Unsubscribe from Observables
   ngOnDestroy(){
     this.addCategorySubscription?.unsubscribe();
   }
