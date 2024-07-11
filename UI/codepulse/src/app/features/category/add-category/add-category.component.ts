@@ -15,6 +15,7 @@ export class AddCategoryComponent implements OnDestroy{
   model: AddCategoryRequest;
   private addCategorySubscription?: Subscription
 
+  //#37.Create Angular Services
   constructor(private categoryService: CategoryService){
     this.model = {
       name: '',

@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+//#37.Create Angular Services
 export class CategoryService {
 
   url: string = environment.apiBaseUrl + '/categories';
