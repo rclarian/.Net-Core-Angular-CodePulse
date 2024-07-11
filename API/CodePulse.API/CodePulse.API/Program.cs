@@ -32,6 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//#38.Enable CORS
 //app.UseCors(options =>
 //{
 //    options.AllowAnyHeader();
