@@ -5,7 +5,7 @@ import { AddCategoryComponent } from './features/category/add-category/add-categ
 
 const routes: Routes = [
   {path: 'admin/categories', component: CategoryListComponent}, //#35.Create Categories List Component and Routing
-  {path: 'admin/categories/add', component: AddCategoryComponent}
+  {path: 'admin/categories/add', component: AddCategoryComponent} //#36.Create Add Category Component and Routing
 ];
 
 @NgModule({

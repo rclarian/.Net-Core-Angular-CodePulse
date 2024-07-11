@@ -17,8 +17,8 @@ export class AddCategoryComponent implements OnDestroy{
 
   constructor(private categoryService: CategoryService){
     this.model = {
-      Name: '',
-      UrlHandle: ''
+      name: '',
+      urlHandle: ''
     }
   }
 
