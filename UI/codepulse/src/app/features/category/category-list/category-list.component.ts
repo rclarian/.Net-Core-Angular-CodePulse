@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { response } from 'express';
 import { error } from 'console';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Category } from '../models/category.model';
 
 @Component({
@@ -12,22 +12,28 @@ import { Category } from '../models/category.model';
 })
 export class CategoryListComponent implements OnInit, OnDestroy{
 
-  categories?: Category[];
+  //categories?: Category[];
+  categories$?: Observable<Category[]>;
   private getCategorySubscription?: Subscription;
   constructor(private categoryService: CategoryService){
 
   }
   
+  // ngOnInit(): void {
+  //   this.getCategorySubscription = this.categoryService.getAllCategories()
+  //     .subscribe({
+  //       next: (response) => {
+  //         this.categories = response;
+  //       },
+  //       error: (error) => {
+  //         console.log('Error on Category list: ' + error)
+  //       }
+  //     });
+  // }
+
   ngOnInit(): void {
-    this.getCategorySubscription = this.categoryService.getAllCategories()
-      .subscribe({
-        next: (response) => {
-          this.categories = response;
-        },
-        error: (error) => {
-          console.log('Error on Category list: ' + error)
-        }
-      });
+    this.categories$ = this.categoryService.getAllCategories();
+      
   }
 
   ngOnDestroy(): void {
