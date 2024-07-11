@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CategoryService } from '../services/category.service';
-import { response } from 'express';
-import { error } from 'console';
 import { Observable, Subscription } from 'rxjs';
 import { Category } from '../models/category.model';
 
@@ -10,11 +8,11 @@ import { Category } from '../models/category.model';
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
-export class CategoryListComponent implements OnInit, OnDestroy{
+export class CategoryListComponent implements OnInit{
 
   //categories?: Category[];
   categories$?: Observable<Category[]>;
-  private getCategorySubscription?: Subscription;
+  //private getCategorySubscription?: Subscription;
   constructor(private categoryService: CategoryService){
 
   }
@@ -36,8 +34,8 @@ export class CategoryListComponent implements OnInit, OnDestroy{
       
   }
 
-  ngOnDestroy(): void {
-    this.getCategorySubscription?.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.getCategorySubscription?.unsubscribe();
+  // }
 
 }

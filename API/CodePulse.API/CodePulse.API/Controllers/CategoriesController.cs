@@ -22,7 +22,7 @@ namespace CodePulse.API.Controllers
 
         //POST: http://localhost:5019/api/Categories
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
             //Map DTO to Domain model
             var category = new Category
@@ -66,5 +66,25 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
+        //GET: http://localhost:5019/api/Categories/44d29ce2-7c8c-4d2b-6ede-08dc9fe6229d
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
+        {
+            var existingCategory = await _categoryRepository.GetById(id);
+
+            if (existingCategory is null) 
+            { 
+                return NotFound();
+            }
+
+            var response = new CategoryDto
+            {
+                Id=existingCategory.Id,
+                Name = existingCategory.Name,
+                UrlHandle = existingCategory.UrlHandle
+            };
+            return Ok(response);
+        }
     }
 }
