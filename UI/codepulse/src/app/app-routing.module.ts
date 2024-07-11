@@ -4,7 +4,7 @@ import { CategoryListComponent } from './features/category/category-list/categor
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
 
 const routes: Routes = [
-  {path: 'admin/categories', component: CategoryListComponent},
+  {path: 'admin/categories', component: CategoryListComponent}, //#35.Create Categories List Component and Routing
   {path: 'admin/categories/add', component: AddCategoryComponent}
 ];
 
