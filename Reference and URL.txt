@@ -71,10 +71,12 @@ Font-awesone: https://cdnjs.com/libraries/font-awesome
 npmjs: https://www.npmjs.com/package/ngx-toastr
 npm i ngx-toastr
 
-
 GutHub Project
 https://github.com/sameer8saini/CodePulse.API
 https://github.com/sameer8saini/CodePulse.UI
+
+---code in angular
+*ng c g navbar --skip-tests
 
 
 
