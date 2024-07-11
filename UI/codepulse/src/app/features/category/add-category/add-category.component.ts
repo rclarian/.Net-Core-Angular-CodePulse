@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class AddCategoryComponent implements OnDestroy{
 
   model: AddCategoryRequest;
-  private addCategorySubscription?: Subscription
+  private addCategorySubscription?: Subscription //39.Unsubscribe from Observables
 
   //#37.Create Angular Services
   constructor(private categoryService: CategoryService){
@@ -35,7 +35,8 @@ export class AddCategoryComponent implements OnDestroy{
     })
   }
 
+  //39.Unsubscribe from Observables
   ngOnDestroy(){
-    this.addCategorySubscription.unsubscribe();
+    this.addCategorySubscription?.unsubscribe();
   }
 }
