@@ -11,15 +11,15 @@ import { Category } from '../models/category.model';
 //#37.Create Angular Services
 export class CategoryService {
 
-  url: string = environment.apiBaseUrl + '/Categories';
+  url: string = environment.apiBaseUrl;
   constructor(private http: HttpClient) { }
 
   addCategory(model: AddCategoryRequest): Observable<void>{
-    return this.http.post<void>(this.url, model);
+    return this.http.post<void>(`${this.url}/api/Categories`, model);
   }
 
   getAllCategories(): Observable<Category[]>{
-    return this.http.get<Category[]>(this.url);
+    return this.http.get<Category[]>(`${this.url}/api/Categories`);
   }
 
 }
