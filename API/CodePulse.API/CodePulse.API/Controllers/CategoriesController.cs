@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodePulse.API.Controllers
 {
-    //#25.Create new controller
     //https://localhost:xxxx/api/categories
     [Route("api/[controller]")]
     [ApiController]
@@ -21,7 +20,7 @@ namespace CodePulse.API.Controllers
             this._categoryRepository = categoryRepository;
         }
 
-        //#27.Create POST Categories action method
+        //POST: http://localhost:5019/api/Categories
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
         {
@@ -45,5 +44,27 @@ namespace CodePulse.API.Controllers
 
             return Ok(response);
         }
+
+        //GET: http://localhost:5019/api/Categories
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+
+            //Map domain model to DTO
+            var response = new List<CategoryDto>();
+            foreach (var category in categories)
+            {
+                response.Add(new CategoryDto
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    UrlHandle = category.UrlHandle
+                });
+            }
+
+            return Ok(response);
+        }
+
     }
 }
