@@ -31,7 +31,6 @@ namespace CodePulse.API.Controllers
                 UrlHandle = request.UrlHandle
             };
 
-            //#29.Change POST Category Action method to use Repository
             await _categoryRepository.CreateAsync(category);
 
             //Map domain model to DTO
@@ -66,7 +65,7 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
-        //GET: http://localhost:5019/api/Categories/44d29ce2-7c8c-4d2b-6ede-08dc9fe6229d
+        //GET: http://localhost:5019/api/Categories/{id}
         [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
@@ -78,6 +77,7 @@ namespace CodePulse.API.Controllers
                 return NotFound();
             }
 
+            //Map domain model to DTO
             var response = new CategoryDto
             {
                 Id=existingCategory.Id,
@@ -86,5 +86,38 @@ namespace CodePulse.API.Controllers
             };
             return Ok(response);
         }
+
+        //PUT: http://localhost:5019/api/Categories/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDto request)
+        {
+            //Map DTO to domain model
+            var category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle
+            };
+
+            category = await _categoryRepository.UpdateAsync(category);
+
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            //Map domain model to DTO
+            var response = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                UrlHandle = category.UrlHandle
+            };
+            return Ok(response);
+        }
+
+
+
     }
 }
