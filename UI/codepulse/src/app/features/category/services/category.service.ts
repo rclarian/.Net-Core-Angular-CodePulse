@@ -31,4 +31,8 @@ export class CategoryService {
     return this.http.put<Category>(`${this.url}/api/Categories/${id}`, updateCategoryRequest);
   }
 
+  deleteCategory(id: string): Observable<Category> {
+    return this.http.delete<Category>(`${this.url}/api/Categories/${id}`);
+  }
+
 }
