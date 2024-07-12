@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CategoryService } from '../services/category.service';
-import { response } from 'express';
-import { error } from 'console';
 import { Category } from '../models/category.model';
+import { UpdateCategoryRequest } from '../models/update-category-request-model';
 
 @Component({
   selector: 'app-edit-category',
@@ -14,23 +13,25 @@ import { Category } from '../models/category.model';
 export class EditCategoryComponent implements OnInit, OnDestroy{
 
   id: string | null = null;
-  paramsSubscription?: Subscription;
-  paramsSubscription1?: Subscription;
+  private paramsSubscription: Subscription = new Subscription();
+
   category?: Category;
 
-  constructor(private route: ActivatedRoute, private categoryService: CategoryService) {
+  constructor(private route: ActivatedRoute, private categoryService: CategoryService, private router: Router) {
 
   }
   
   //Get the id from click button
   ngOnInit(): void {
-    this.paramsSubscription = this.route.paramMap.subscribe({
+    let sub1: any;
+    let sub2: any;
+    sub1 = this.route.paramMap.subscribe({
       next: (params) => {
         this.id = params.get('id');
 
         if(this.id){
           //get the data from the API for this category Id
-          this.paramsSubscription1 = this.categoryService.getCategoryById(this.id)
+          sub2 = this.categoryService.getCategoryById(this.id)
           .subscribe({
             next: (response) => {
               this.category = response;
@@ -45,14 +46,34 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
         console.log('Error on Edit params: ' + error)
       }
     });
+
+    this.paramsSubscription.add(sub1);
+    this.paramsSubscription.add(sub2);
   }
 
   onFormSubmit(): void {
-    console.log(this.category);
+    const updateCategoryRequest: UpdateCategoryRequest = {
+      name: this.category?.name ?? '',
+      urlHandle: this.category?.urlHandle ?? ''
+    };
+
+    //pass this object to service
+    if(this.id){
+      let sub3 = this.categoryService.updateCategory(this.id, updateCategoryRequest)
+        .subscribe({
+          next: (response) => {
+            this.router.navigateByUrl('/admin/categories');
+          },
+          error: (error) => {
+            console.log('Error on updateCategory: ' + error);
+          }
+        });
+        this.paramsSubscription.add(sub3);  
+    }
   }
 
   ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
     this.paramsSubscription?.unsubscribe();
-    this.paramsSubscription1?.unsubscribe();
   }
 }
