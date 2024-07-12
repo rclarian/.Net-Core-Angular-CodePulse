@@ -78,7 +78,9 @@ https://github.com/sameer8saini/CodePulse.UI
 ---code in angular
 *ng c g navbar --skip-tests
 
-
+--ngx-markdown
+npm install ngx-markdown
+npm install ngx-markdown@17.0.0
 
 
 
