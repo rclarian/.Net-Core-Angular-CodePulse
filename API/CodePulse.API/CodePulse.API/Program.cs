@@ -12,14 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//DB injection #23.Understanding DI & Injecting DbContext into our application
+//DB injection
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("CodePulseConnectionString"));
 });
 
-//Implemention injection //#29.Change POST Category Action method to use Repository
+//Implemention injection
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 var app = builder.Build();
 
@@ -32,7 +33,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//#38.Enable CORS
 //app.UseCors(options =>
 //{
 //    options.AllowAnyHeader();
