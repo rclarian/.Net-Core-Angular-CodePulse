@@ -6,6 +6,7 @@ import { BlogPost } from '../models/blog-post.model';
 import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-edit-blogpost',
@@ -87,6 +88,25 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
         });
     }
     this.routeSubscription?.add(sub3);
+  }
+
+  onDelete(): void {
+    if(this.id){
+      let sub4: any;
+      if(confirm('Are you sure to delete this record?')){
+        //call service and delete blogpost
+        sub4 = this.blogPostService.deleteBlogPost(this.id)
+          .subscribe({
+            next: (res) => {
+              this.router?.navigateByUrl('/admin/blogposts');
+            },
+            error: (err) => {
+              console.log('Error on deleteBlogPost: ' + err)
+            }
+          })
+      }
+      this.routeSubscription?.add(sub4);
+    }
   }
 
   ngOnDestroy(): void {
