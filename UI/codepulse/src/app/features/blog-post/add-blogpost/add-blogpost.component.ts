@@ -1,8 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AddBlogPost } from '../models/add-blog-post.model';
 import { BlogPostService } from '../services/blog-post.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { CategoryService } from '../../category/services/category.service';
+import { Category } from '../../category/models/category.model';
 
 
 @Component({
@@ -10,12 +12,13 @@ import { Router } from '@angular/router';
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
-export class AddBlogpostComponent implements OnDestroy{
+export class AddBlogpostComponent implements OnDestroy, OnInit{
 
   model: AddBlogPost;
-  private addBlogPostSubscription?: Subscription
+  private addBlogPostSubscription?: Subscription;
+  categories$?: Observable<Category[]>;
 
-  constructor(private blogPostService: BlogPostService, private router: Router){
+  constructor(private blogPostService: BlogPostService, private router: Router, private categoryService: CategoryService){
     this.model = {
       title: '',
       shortDescription: '',
@@ -26,6 +29,10 @@ export class AddBlogpostComponent implements OnDestroy{
       publishedDate: new Date(),
       isVisible: true
     }
+  }
+  
+  ngOnInit(): void {
+    this.categories$ = this.categoryService.getAllCategories()
   }
 
   onFormSubmit(): void{
