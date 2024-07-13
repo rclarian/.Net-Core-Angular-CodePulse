@@ -13,7 +13,7 @@ import { UpdateCategoryRequest } from '../models/update-category-request-model';
 export class EditCategoryComponent implements OnInit, OnDestroy{
 
   id: string | null = null;
-  paramsSubscription: Subscription = new Subscription();
+  paramsSubscription?: Subscription = new Subscription();
   category?: Category;
 
   constructor(private route: ActivatedRoute, private categoryService: CategoryService, private router: Router) {
@@ -61,7 +61,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
       let sub3 = this.categoryService.updateCategory(this.id, updateCategoryRequest)
         .subscribe({
           next: (response) => {
-            this.router.navigateByUrl('/admin/categories');
+            this.router?.navigateByUrl('/admin/categories');
           },
           error: (error) => {
             console.log('Error on updateCategory: ' + error);
@@ -78,7 +78,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
         sub4 = this.categoryService.deleteCategory(this.id)
           .subscribe({
             next: (res) => {
-              this.router.navigateByUrl('/admin/categories');
+              this.router?.navigateByUrl('/admin/categories');
             },
             error: (err) => {
               console.log('Error on deleteCategory: ' + err);

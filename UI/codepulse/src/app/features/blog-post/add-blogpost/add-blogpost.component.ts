@@ -40,7 +40,7 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
     this.addBlogPostSubscription = this.blogPostService.createBlogPost(this.model)
       .subscribe({
         next: (res) => {
-          this.router.navigateByUrl('/admin/blogposts');
+          this.router?.navigateByUrl('/admin/blogposts');
         },
         error: (err) => {
           console.log('Error: ' + err);
