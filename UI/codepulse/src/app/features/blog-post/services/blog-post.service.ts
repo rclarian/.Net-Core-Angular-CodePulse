@@ -4,6 +4,7 @@ import { AddBlogPost } from '../models/add-blog-post.model';
 import { BlogPost } from '../models/blog-post.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { UpdateBlogPost } from '../models/update-blog-post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +25,9 @@ export class BlogPostService {
   getBlogPostById(id: string): Observable<BlogPost>{
     return this.http.get<BlogPost>(`${this.url}/api/BlogPosts/${id}`);
   }
+
+  updateBlogPost(id: string, updatedBlogPost: UpdateBlogPost): Observable<BlogPost> {
+    return this.http.put<BlogPost>(`${this.url}/api/BlogPosts/${id}`, updatedBlogPost);
+  }
+  
 }
