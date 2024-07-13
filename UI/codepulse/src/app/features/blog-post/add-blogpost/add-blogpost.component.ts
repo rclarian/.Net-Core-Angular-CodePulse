@@ -15,7 +15,7 @@ import { Category } from '../../category/models/category.model';
 export class AddBlogpostComponent implements OnDestroy, OnInit{
 
   model: AddBlogPost;
-  private addBlogPostSubscription?: Subscription;
+  addBlogPostSubscription?: Subscription;
   categories$?: Observable<Category[]>;
 
   constructor(private blogPostService: BlogPostService, private router: Router, private categoryService: CategoryService){

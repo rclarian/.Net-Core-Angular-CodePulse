@@ -13,8 +13,7 @@ import { UpdateCategoryRequest } from '../models/update-category-request-model';
 export class EditCategoryComponent implements OnInit, OnDestroy{
 
   id: string | null = null;
-  private paramsSubscription: Subscription = new Subscription();
-
+  paramsSubscription: Subscription = new Subscription();
   category?: Category;
 
   constructor(private route: ActivatedRoute, private categoryService: CategoryService, private router: Router) {
@@ -47,8 +46,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
       }
     });
 
-    this.paramsSubscription.add(sub1);
-    this.paramsSubscription.add(sub2);
+    this.paramsSubscription?.add(sub1);
+    this.paramsSubscription?.add(sub2);
   }
 
   onFormSubmit(): void {
@@ -68,7 +67,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
             console.log('Error on updateCategory: ' + error);
           }
         });
-        this.paramsSubscription.add(sub3);  
+        this.paramsSubscription?.add(sub3);  
     }
   }
 
@@ -86,7 +85,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
             }
           });
       }
-      this.paramsSubscription.add(sub4);
+      this.paramsSubscription?.add(sub4);
     }
   }
 

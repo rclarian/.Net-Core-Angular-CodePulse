@@ -51,8 +51,8 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
         console.log('Error on Get Id: ' + err)
       }
     });
-    this.routeSubscription.add(sub1);
-    this.routeSubscription.add(sub2);
+    this.routeSubscription?.add(sub1);
+    this.routeSubscription?.add(sub2);
   }
 
   onFormSubmit(): void{
