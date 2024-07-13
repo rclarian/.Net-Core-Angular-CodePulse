@@ -27,10 +27,11 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
       urlHandle: '',
       author: '',
       publishedDate: new Date(),
-      isVisible: true
+      isVisible: true,
+      categories: []
     }
   }
-  
+
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories()
   }
