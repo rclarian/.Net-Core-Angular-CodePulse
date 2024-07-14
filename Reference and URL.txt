@@ -85,7 +85,14 @@ npm install ngx-markdown@17.0.0
 --for the image
 https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 
-
+--Steps on create table in DB with Entity Framework
+*Create the domain model ex. BlogImages.cs
+*Add it to ApplicationDbContext.cs
+*Run the steps below
+* Tools > Nuget Package Manager > Nuget Package Console
+- 2 Commands
+* Add-Migration "Adding Blogimage domain model"
+* Update-Database
 
 
 
