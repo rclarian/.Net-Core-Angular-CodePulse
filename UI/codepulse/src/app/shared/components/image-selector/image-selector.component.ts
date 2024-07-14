@@ -44,6 +44,10 @@ export class ImageSelectorComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectImage(image: BlogImage): void{
+    this.imageService.selectImage(image);
+  }
+
   ngOnInit(): void {
     this.getImages();
   }

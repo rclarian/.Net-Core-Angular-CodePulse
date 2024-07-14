@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BlogImage } from '../../models/blog-image.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -8,6 +8,14 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class ImageService {
+
+  selectedImage: BehaviorSubject<BlogImage> = new BehaviorSubject<BlogImage>({
+    id: '',
+    fileExtenstion: '',
+    fileName: '',
+    title: '',
+    url: ''
+  });
 
   url: string = environment.apiBaseUrl;
   constructor(private http: HttpClient) { }
@@ -25,6 +33,12 @@ export class ImageService {
     return this.http.post<BlogImage>(`${this.url}/api/images`, formData);
   }
 
+  selectImage(image: BlogImage): void {
+    this.selectedImage.next(image);
+  }
 
+  onSelectImage(): Observable<BlogImage> {
+    return this.selectedImage.asObservable();
+  }
 
 }

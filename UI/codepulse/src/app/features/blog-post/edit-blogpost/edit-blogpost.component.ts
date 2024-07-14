@@ -7,6 +7,7 @@ import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
 import { subscribe } from 'diagnostics_channel';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-edit-blogpost',
@@ -26,7 +27,8 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private blogPostService: BlogPostService, 
     private categoryService: CategoryService,
-    private router: Router){
+    private router: Router,
+    private imageService: ImageService){
 
   }
   
@@ -35,6 +37,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
 
     let sub1: any;
     let sub2: any;
+    let sub5: any;
 
     sub1 = this.route.paramMap.subscribe({
       next: (params) => {
@@ -49,17 +52,33 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
               this.selectedCategories = res.categories.map(x => x.id);
             },
             error: (err) => {
-              console.log('Error on getBlogPostById: ' + err)
+              console.log('Error on getBlogPostById: ' + err);
             }
           })
         }
+
+        sub5 = this.imageService.onSelectImage()
+          .subscribe({
+            next: (res) => {
+              if(this.model){
+                this.model.featuredImageUrl = res.url;
+                this.isImageSelectorVisible = false;
+              }
+            },
+            error: (err) => {
+              console.log('Error on onSelectImage: ' + err);
+            }
+          });
+
       },
       error: (err) => {
         console.log('Error on Get Id: ' + err)
       }
     });
+
     this.routeSubscription?.add(sub1);
     this.routeSubscription?.add(sub2);
+    this.routeSubscription?.add(sub5);
   }
 
   onFormSubmit(): void{
