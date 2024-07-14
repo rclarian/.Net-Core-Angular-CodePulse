@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 
 @Component({
@@ -16,9 +17,16 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
 
   model: AddBlogPost;
   addBlogPostSubscription?: Subscription;
+  onSelectImageSubscription?: Subscription;
   categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
 
-  constructor(private blogPostService: BlogPostService, private router: Router, private categoryService: CategoryService){
+  constructor(
+    private blogPostService: BlogPostService, 
+    private router: Router, 
+    private categoryService: CategoryService,
+    private imageService: ImageService){
+
     this.model = {
       title: '',
       shortDescription: '',
@@ -33,7 +41,20 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    this.categories$ = this.categoryService.getAllCategories()
+    this.categories$ = this.categoryService.getAllCategories();
+
+    this.onSelectImageSubscription = this.imageService.onSelectImage()
+      .subscribe({
+        next: (selectedImage) => {
+          if(this.model){
+            this.model.featuredImageUrl = selectedImage.url;
+            this.closeImageSelector();
+          }
+        },
+        error: (err) => {
+          console.log('Error on onSelectImage: ' + err);
+        }
+      });
   }
 
   onFormSubmit(): void{
@@ -48,8 +69,17 @@ export class AddBlogpostComponent implements OnDestroy, OnInit{
       });
   }
 
+  openImageSelector(): void{
+    this.isImageSelectorVisible = true;
+  }
+
+  closeImageSelector(): void{
+    this.isImageSelectorVisible = false;
+  }
+
   ngOnDestroy(){
     this.addBlogPostSubscription?.unsubscribe();
+    this.onSelectImageSubscription?.unsubscribe();
   }
 
 }
