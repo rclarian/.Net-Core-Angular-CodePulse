@@ -18,6 +18,7 @@ namespace CodePulse.API.Repositories.Implementation
             this._httpContextAccessor = httpContextAccessor;
             this._dbContext = dbContext;
         }
+
         public async Task<BlogImage> Upload(IFormFile file, BlogImage blogImage)
         {
             // 1- Upload the Image to API/Images
@@ -37,5 +38,12 @@ namespace CodePulse.API.Repositories.Implementation
 
             return blogImage;
         }
+
+        public async Task<IEnumerable<BlogImage>> GetAll()
+        {
+            return await _dbContext.BlogImages.ToListAsync();
+        }
+
+
     }
 }
