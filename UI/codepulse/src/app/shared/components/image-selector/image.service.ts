@@ -12,6 +12,10 @@ export class ImageService {
   url: string = environment.apiBaseUrl;
   constructor(private http: HttpClient) { }
 
+  getAllImages(): Observable<BlogImage[]>{
+    return this.http.get<BlogImage[]>(`${this.url}/api/images`);
+  }
+
   uploadImage(file: File, fileName: string, title: string): Observable<BlogImage>{
     const formData = new FormData();
     formData.append('file', file);
@@ -20,4 +24,7 @@ export class ImageService {
     
     return this.http.post<BlogImage>(`${this.url}/api/images`, formData);
   }
+
+
+
 }
