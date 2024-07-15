@@ -93,6 +93,9 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 - 2 Commands
 * Add-Migration "Adding Blogimage domain model"
 * Update-Database
+--
+* Add-Migration "Initial Migration For Auth" -Context "AuthDbContext" -----use this if multiple Dbcontext
+* Update-Database -Context "AuthDbContext" -----use this if multiple Dbcontext
 
 --Authentication - Install Nuget Packages
 * Microsoft.AspNetCore.Authentication.JwtBearer
