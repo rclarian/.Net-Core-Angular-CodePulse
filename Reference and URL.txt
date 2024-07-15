@@ -94,6 +94,11 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 * Add-Migration "Adding Blogimage domain model"
 * Update-Database
 
+--Authentication - Install Nuget Packages
+* Microsoft.AspNetCore.Authentication.JwtBearer
+* Microsoft.AspNetCore.Identity.EntityFrameworkCore
+* Microsoft.IdentityModel.Tokens
+* System.IdentityModel.Tokens.Jwt
 
 
 
