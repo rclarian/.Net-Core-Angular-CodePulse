@@ -29,10 +29,11 @@ builder.Services.AddDbContext<AuthDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CodePulseConnectionString"));
 });
 
-//Implemention injection
+//Implemention/Interface injection
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 //Configure Identity core
 builder.Services.AddIdentityCore<IdentityUser>()
