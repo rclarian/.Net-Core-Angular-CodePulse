@@ -29,6 +29,12 @@ export class LoginComponent implements OnDestroy{
           //Set Auth Cookie
           this.cookieService.set('Authorization', `Bearer ${res.token}`, undefined, '/', undefined, true, 'Strict');
 
+          //Set the user
+          this.authService.setUser({
+            email: res.email,
+            roles: res.roles
+          });
+
           //Redirect back to Home page
           this.router.navigateByUrl('/');
         },
