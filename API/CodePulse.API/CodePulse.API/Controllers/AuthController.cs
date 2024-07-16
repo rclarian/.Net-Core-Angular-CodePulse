@@ -17,6 +17,38 @@ namespace CodePulse.API.Controllers
             this._userManager = userManager;
         }
 
+        //POST: {apibaseurl}/api/auth/login
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+        {
+            //Check Email
+            var identityUser = await _userManager.FindByEmailAsync(request.Email);
+
+            if (identityUser is not null)
+            {
+                //Check Password
+                var checkPasswordResult = await _userManager.CheckPasswordAsync(identityUser, request.Password);
+
+                if (checkPasswordResult) 
+                {
+                    var roles = await _userManager.GetRolesAsync(identityUser);
+
+                    //Create a Token and Respons
+                    var response = new LoginResponseDto()
+                    {
+                        Email = request.Email,
+                        Roles = roles.ToList(),
+                        Token = "TOKEN"
+                    };
+
+                    return Ok(response);
+                }
+            }
+            ModelState.AddModelError("", "Email or Password Incorrect.");
+            return ValidationProblem(ModelState);
+        }
+
         //POST: {apibaseurl}/api/auth/register
         [HttpPost]
         [Route("register")]
