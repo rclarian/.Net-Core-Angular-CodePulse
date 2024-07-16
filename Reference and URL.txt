@@ -103,10 +103,14 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 * Microsoft.IdentityModel.Tokens
 * System.IdentityModel.Tokens.Jwt
 
+--NGX Cookie Service
+*npm install ngx-cookie-service --save   ------not working
+*npm install ngx-cookie-service --save --legacy-peer-deps   ------not working
+*npm install ngx-cookie-service@17.0.0 --save     ------this working
 
-
-
-
+--User for testing
+USER1@CODEPULSE.COM
+User1@123
 
 
 
