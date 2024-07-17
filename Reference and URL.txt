@@ -82,6 +82,9 @@ https://github.com/sameer8saini/CodePulse.UI
 npm install ngx-markdown
 npm install ngx-markdown@17.0.0
 
+--ng generate interceptor
+ng generate interceptor auth --skip-tests
+
 --for the image
 https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 
