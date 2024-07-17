@@ -85,6 +85,9 @@ npm install ngx-markdown@17.0.0
 --ng generate interceptor
 ng generate interceptor auth --skip-tests
 
+--ng generate guard auth
+ng generate guard auth
+
 --for the image
 https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 
@@ -110,6 +113,9 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 *npm install ngx-cookie-service --save   ------not working
 *npm install ngx-cookie-service --save --legacy-peer-deps   ------not working
 *npm install ngx-cookie-service@17.0.0 --save     ------this working
+
+--npm insatll jwt-decode
+npm install jwt-decode
 
 --User for testing
 admin@codepulse.com
