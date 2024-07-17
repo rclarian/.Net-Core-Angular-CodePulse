@@ -109,7 +109,10 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 *npm install ngx-cookie-service@17.0.0 --save     ------this working
 
 --User for testing
-USER1@CODEPULSE.COM
+admin@codepulse.com
+Admin@123
+
+User1@codepulse.com
 User1@123
 
 
