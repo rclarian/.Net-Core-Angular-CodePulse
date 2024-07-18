@@ -2,11 +2,9 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../services/auth.service';
-//import { JwtPayload, decode } from 'jwt-decode';
 import { jwtDecode } from 'jwt-decode';
 
 export const authGuard: CanActivateFn = (route, state) => {
-
   const cookieService = inject(CookieService);
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -17,31 +15,41 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (token && user) {
     token = token.replace('Bearer ', '');
-    const decodedToken: any = jwtDecode(token);
+    try {
+      const decodedToken: any = jwtDecode(token);
 
-    //Check if token has expired
-    const exirationDate = decodedToken.exp * 1000;
-    const currentTime = new Date().getTime();
+      // Check if token has expired
+      const expirationDate = decodedToken.exp * 1000;
+      const currentTime = new Date().getTime();
 
-    if(exirationDate < currentTime){
-      //Logout
-      authService.logout();
-      return router.createUrlTree(['/login'], { queryParams : { returnUrl: state.url }});
-    }else{
-      //Token is still valid
-
-      if(user.roles.includes('Writer')){
-        return true;
-      }else{
-        alert('Unauthorized');
-        return false;
+      if (expirationDate < currentTime) {
+        // Token has expired, log out and redirect to login
+        if (typeof window !== 'undefined') {
+          authService.logout();
+        }
+        return router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+      } else {
+        // Token is still valid
+        if (user.roles.includes('Writer')) {
+          return true;
+        } else {
+          alert('Unauthorized');
+          return false;
+        }
       }
-
+    } catch (error) {
+      // Handle token decoding errors
+      console.error('Token decoding error:', error);
+      if (typeof window !== 'undefined') {
+        authService.logout();
+      }
+      return router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
     }
-    
   } else {
-    //Logout
-    authService.logout();
-    return router.createUrlTree(['/login'], { queryParams : { returnUrl: state.url }});
+    // No token or user, log out and redirect to login
+    if (typeof window !== 'undefined') {
+      authService.logout();
+    }
+    return router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
   }
 };
