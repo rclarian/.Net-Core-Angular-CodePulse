@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AddCategoryRequest } from '../models/add-category-request-model';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Category } from '../models/category.model';
 import { UpdateCategoryRequest } from '../models/update-category-request-model';
@@ -16,8 +16,16 @@ export class CategoryService {
   url: string = environment.apiBaseUrl;
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
-  getAllCategories(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${this.url}/api/Categories`);
+  getAllCategories(query?: string): Observable<Category[]>{
+    let params = new HttpParams();
+
+    if(query){
+      params = params.set('query', query);
+    }
+
+    return this.http.get<Category[]>(`${this.url}/api/Categories`, {
+      params: params
+    });
   }
 
   getCategoryById(id: string): Observable<Category>{

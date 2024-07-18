@@ -23,7 +23,7 @@ namespace CodePulse.API.Controllers
 
         //POST: http://localhost:5019/api/Categories
         [HttpPost]
-        //[Authorize(Roles = "Writer")] //commented out for api testing
+        [Authorize(Roles = "Writer")] //commented out for api testing
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
             //Map DTO to Domain model
