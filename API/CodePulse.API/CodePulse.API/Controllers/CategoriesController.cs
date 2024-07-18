@@ -46,11 +46,14 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
-        //GET: http://localhost:5019/api/Categories?query=html
+        //GET: http://localhost:5019/api/Categories?query=html&sortBy=name&sortDirection=desc
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
+        public async Task<IActionResult> GetAllCategories(
+            [FromQuery] string? query, 
+            [FromQuery] string? sortBy, 
+            [FromQuery] string? sortDirection)
         {
-            var categories = await _categoryRepository.GetAllAsync(query);
+            var categories = await _categoryRepository.GetAllAsync(query, sortBy, sortDirection);
 
             //Map domain model to DTO
             var response = new List<CategoryDto>();
