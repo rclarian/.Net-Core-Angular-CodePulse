@@ -51,9 +51,11 @@ namespace CodePulse.API.Controllers
         public async Task<IActionResult> GetAllCategories(
             [FromQuery] string? query, 
             [FromQuery] string? sortBy, 
-            [FromQuery] string? sortDirection)
+            [FromQuery] string? sortDirection,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var categories = await _categoryRepository.GetAllAsync(query, sortBy, sortDirection);
+            var categories = await _categoryRepository.GetAllAsync(query, sortBy, sortDirection, pageNumber, pageSize);
 
             //Map domain model to DTO
             var response = new List<CategoryDto>();
