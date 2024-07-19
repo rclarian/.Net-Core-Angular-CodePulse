@@ -151,7 +151,7 @@ namespace CodePulse.API.Controllers
         //GET: http://localhost:5019/api/Categories/count
         [HttpGet]
         [Route("count")]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> GetCategoryTotal()
         {
             var count = await _categoryRepository.GetCount();

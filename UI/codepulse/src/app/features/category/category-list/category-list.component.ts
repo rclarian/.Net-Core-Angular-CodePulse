@@ -8,11 +8,16 @@ import { Category } from '../models/category.model';
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
-export class CategoryListComponent implements OnInit{
+export class CategoryListComponent implements OnInit, OnDestroy{
 
   //categories?: Category[];
+  private categorySubscription?: Subscription;
   categories$?: Observable<Category[]>;
-  //private getCategorySubscription?: Subscription;
+  totalCount?: number;
+  list: number[] = [];
+  pageNumber: number = 1;
+  pageSize: number = 5;
+
   constructor(private categoryService: CategoryService){
 
   }
@@ -30,8 +35,23 @@ export class CategoryListComponent implements OnInit{
   // }
 
   ngOnInit(): void {
-    this.categories$ = this.categoryService.getAllCategories();
-      
+    this.categorySubscription = this.categoryService.getCategoryCount()
+      .subscribe({
+        next: (value) => {
+          this.totalCount = value;
+          this.list = new Array(Math.ceil(value / this.pageSize));
+          this.categories$ = this.categoryService.getAllCategories(
+            undefined,
+            undefined,
+            undefined,
+            this.pageNumber,
+            this.pageSize
+          );
+        },
+        error: (err) =>{
+          console.log('Error on getCategoryCount: ' + err)
+        }
+      });
   }
   
   onSearch(query: string){
@@ -42,8 +62,50 @@ export class CategoryListComponent implements OnInit{
     this.categories$ = this.categoryService.getAllCategories(undefined, sortBy, sortDirection);
   }
 
-  // ngOnDestroy(): void {
-  //   this.getCategorySubscription?.unsubscribe();
-  // }
+  getPage(pageNumber: number){
+    this.pageNumber = pageNumber;
+
+    this.categories$ = this.categoryService.getAllCategories(
+      undefined,
+      undefined,
+      undefined,
+      this.pageNumber,
+      this.pageSize
+    );
+  }
+
+  getPrevPage(){
+    if(this.pageNumber - 1  < 1){
+      return;
+    }
+
+    this.pageNumber -= 1;
+    this.categories$ = this.categoryService.getAllCategories(
+      undefined,
+      undefined,
+      undefined,
+      this.pageNumber,
+      this.pageSize
+    );
+  }
+
+  getNexPage(){
+    if(this.pageNumber + 1  > this.list.length){
+      return;
+    }
+
+    this.pageNumber += 1;
+    this.categories$ = this.categoryService.getAllCategories(
+      undefined,
+      undefined,
+      undefined,
+      this.pageNumber,
+      this.pageSize
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.categorySubscription?.unsubscribe();
+  }
 
 }
