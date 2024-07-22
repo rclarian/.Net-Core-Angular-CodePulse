@@ -17,6 +17,14 @@ Stateless -
 *Content Negotiation
 *Response Types
 
+--Create Angular Project
+Folder location: ng new project-name, example ng angular-ekart
+
+ng new angular-ekart-1 --no-standalone ,use this to add app.module.ts
+-Would you like to add angular routing - no
+-css
+-server-side rendering ssr - yes
+
 --HTTP Verbs - define the types of actions that can be performed on a resource identified by a URI
 *GET
 *POST
