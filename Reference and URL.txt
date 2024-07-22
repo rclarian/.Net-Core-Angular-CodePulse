@@ -29,6 +29,9 @@ ng new angular-ekart-1 --no-standalone ,use this to add app.module.ts
 ng add @angular/material
 npm install @angular/animations@17.3.8
 
+--Install flexboxgrid
+npm i flexboxgrid
+
 --HTTP Verbs - define the types of actions that can be performed on a resource identified by a URI
 *GET
 *POST
