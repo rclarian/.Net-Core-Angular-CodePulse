@@ -12,9 +12,9 @@ namespace StudentAdminPortal.API.Repositories
             this._dbContext = dbContext;
         }
 
-        public List<Student> GetStudents()
+        public async Task<List<Student>> GetStudentsAsync()
         {
-            return _dbContext.Student.Include(nameof(Gender)).Include(nameof(Address)).ToList();
+            return await _dbContext.Student.Include(nameof(Gender)).Include(nameof(Address)).ToListAsync();
         }
     }
 }

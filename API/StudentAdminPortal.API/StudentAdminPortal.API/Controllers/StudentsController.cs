@@ -21,9 +21,9 @@ namespace StudentAdminPortal.API.Controllers
         //GET: http://localhost:5096/Students
         [HttpGet]
         [Route("[controller]")]
-        public IActionResult GetAllStudents()
+        public async Task<IActionResult> GetAllStudentsAsync()
         {
-            var students = _studentRepository.GetStudents();
+            var students = await _studentRepository.GetStudentsAsync();
 
             return Ok(_mapper.Map<List<StudentDto>>(students));
         }
