@@ -65,13 +65,14 @@ ng new angular-ekart-1 --no-standalone ,use this to add app.module.ts
 *Performance
 *Multiple data sources(switching) 
 
-----Need to install for angular
+----Need to install for angular extensions
 ESLint by Microsoft
 Angular Snippets (version16) by John Papa
 CSS Formatter by Martin Aeschlimann
 Angular Language Service by Angular
 IntelliSense for CSS class name in HTML BY Zignd
 Path Intellisense by Christian Kohler
+Angular Essentials by John Papa
 
 ---Bootstrap:
 Bootstrap: https://getbootstrap.com/
