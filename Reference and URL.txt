@@ -114,6 +114,11 @@ https://www.pexels.com/photo/photo-of-a-flower-on-a-white-background-7185717/
 *npm install ngx-cookie-service --save --legacy-peer-deps   ------not working
 *npm install ngx-cookie-service@17.0.0 --save     ------this working
 
+--Install AutoMapper packages
+Please install the below nuget packages
+AutoMapper version 12.0.0
+AutoMapper.Extensions.Microsoft.DependencyInjection version 12.0.0
+
 --npm insatll jwt-decode
 npm install jwt-decode
 
