@@ -19,6 +19,7 @@ export class StudentsComponent implements OnInit, OnDestroy, AfterViewInit{
   dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>();
   @ViewChild(MatPaginator) matPaginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
+  filterString = '';
 
   constructor(private studentService: StudentService) {
 
@@ -36,6 +37,10 @@ export class StudentsComponent implements OnInit, OnDestroy, AfterViewInit{
           console.log('Error on getStudents' + err);
         }
       });
+  }
+
+  filterStudents(){
+    this.dataSource.filter = this.filterString.trim().toLowerCase();
   }
 
   ngAfterViewInit(): void {
