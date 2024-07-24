@@ -3,6 +3,8 @@ import { StudentService } from '../student.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Student } from '../../models/ui-models/student.model';
+import { GenderService } from '../../services/gender.service';
+import { Gender } from '../../models/ui-models/gender.model';
 
 @Component({
   selector: 'app-view-student',
@@ -13,7 +15,9 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
 
   paramsSubscription?: Subscription = new Subscription();
   studentSubscription?: Subscription = new Subscription();
+  genderSubscription?: Subscription = new Subscription();
   studentId?: string | null;
+  genderList: Gender[] = [];
 
   student: Student = {
     id: '',
@@ -35,7 +39,10 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private studentService: StudentService, private readonly route: ActivatedRoute){}
+  constructor(
+    private studentService: StudentService, 
+    private readonly route: ActivatedRoute, 
+    private genderService: GenderService){}
   
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap
@@ -53,6 +60,16 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                 console.log('Error on getStudent' + err);
               }
             });
+
+            this.genderSubscription = this.genderService.getGenderList()
+              .subscribe({
+                next: (res) => {
+                  this.genderList = res;
+                },
+                error: (err) => {
+                  console.log('Error on getGenderList' + err);
+                }
+              });
         }
 
       },
@@ -65,6 +82,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
     this.studentSubscription?.unsubscribe();
+    this.genderSubscription?.unsubscribe();
   }
 
 
