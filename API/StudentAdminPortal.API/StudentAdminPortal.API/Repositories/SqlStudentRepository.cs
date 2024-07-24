@@ -23,5 +23,10 @@ namespace StudentAdminPortal.API.Repositories
                 .Include(nameof(Gender)).Include(nameof(Address))
                 .FirstOrDefaultAsync(x => x.Id == studentId);
         }
+
+        public async Task<List<Gender>> GetGendersAsync()
+        {
+            return await _dbContext.Gender.ToListAsync();
+        }
     }
 }
