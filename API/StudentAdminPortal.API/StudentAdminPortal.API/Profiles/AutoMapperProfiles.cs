@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using StudentAdminPortal.API.DataModels;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using DataModels = StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.DomainModels;
+using StudentAdminPortal.API.Profiles.AfterMaps;
 
 namespace StudentAdminPortal.API.Profiles
 {
@@ -8,14 +10,14 @@ namespace StudentAdminPortal.API.Profiles
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Student, StudentDto>()
-                .ReverseMap();
+            CreateMap<DataModels.Student, StudentDto>().ReverseMap();
 
-            CreateMap<Gender, GenderDto>()
-                .ReverseMap();
+            CreateMap<DataModels.Gender, GenderDto>().ReverseMap();
 
-            CreateMap<Address, AddressDto>()
-                .ReverseMap();
-        }
+            CreateMap<DataModels.Address, AddressDto>().ReverseMap();
+
+            CreateMap<UpdateStudentRequestDto, DataModels.Student>()
+                .AfterMap<UpdateStudentRequestAfterMap>();
+        }  
     }
 }
