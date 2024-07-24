@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StudentService } from '../student.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Student } from '../../models/ui-models/student.model';
 import { GenderService } from '../../services/gender.service';
@@ -16,6 +16,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   paramsSubscription?: Subscription = new Subscription();
   studentSubscription?: Subscription = new Subscription();
   genderSubscription?: Subscription = new Subscription();
+  updateStudentSubscription?: Subscription = new Subscription();
   studentId?: string | null;
   genderList: Gender[] = [];
 
@@ -42,7 +43,8 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   constructor(
     private studentService: StudentService, 
     private readonly route: ActivatedRoute, 
-    private genderService: GenderService){}
+    private genderService: GenderService,
+    private router: Router){}
   
   ngOnInit(): void {
     this.paramsSubscription = this.route.paramMap
@@ -79,10 +81,24 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     });
   }
 
+  onUpdate(): void{
+    this.updateStudentSubscription = this.studentService.updateStudent(this.studentId, this.student)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.router?.navigateByUrl('/students');
+        },
+        error: (err) => {
+          console.log('Error on updateStudent' + err);
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
     this.studentSubscription?.unsubscribe();
     this.genderSubscription?.unsubscribe();
+    this.updateStudentSubscription?.unsubscribe();
   }
 
 
