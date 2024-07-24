@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StudentService } from '../student.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Student } from '../../models/ui-models/student.model';
 
 @Component({
   selector: 'app-view-student',
@@ -13,6 +14,27 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   paramsSubscription?: Subscription = new Subscription();
   studentSubscription?: Subscription = new Subscription();
   studentId?: string | null;
+
+  student: Student = {
+    id: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    email: '',
+    mobile: 0,
+    genderId: '',
+    profileImageUrl: '',
+    gender: {
+      id: '',
+      description: ''
+    },
+    address: {
+      id: '',
+      physicalAddress: '',
+      postalAddress: ''
+    }
+  }
+
   constructor(private studentService: StudentService, private readonly route: ActivatedRoute){}
   
   ngOnInit(): void {
@@ -26,6 +48,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
             .subscribe({
               next: (res) => {
                 console.log(res)
+                this.student = res;
               },
               error: (err) => {
                 console.log('Error on getStudent' + err);
