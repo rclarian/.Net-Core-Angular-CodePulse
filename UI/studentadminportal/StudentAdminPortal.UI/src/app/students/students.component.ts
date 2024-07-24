@@ -32,6 +32,15 @@ export class StudentsComponent implements OnInit, OnDestroy, AfterViewInit{
         next: (res) => {
           this.students = res;
           this.dataSource = new MatTableDataSource<Student>(this.students);
+
+          if(this.matPaginator){
+            this.dataSource.paginator = this.matPaginator;
+          }
+
+          if(this.matSort){
+            this.dataSource.sort = this.matSort;
+          }
+
         },
         error: (err) => {
           console.log('Error on getStudents' + err);
