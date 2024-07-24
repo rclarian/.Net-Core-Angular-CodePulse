@@ -47,7 +47,6 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           this.studentSubscription = this.studentService.getStudent(this.studentId)
             .subscribe({
               next: (res) => {
-                console.log(res)
                 this.student = res;
               },
               error: (err) => {
