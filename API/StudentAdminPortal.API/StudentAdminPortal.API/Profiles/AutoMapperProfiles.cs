@@ -10,13 +10,13 @@ namespace StudentAdminPortal.API.Profiles
     {
         public AutoMapperProfiles()
         {
-            CreateMap<DataModels.Student, StudentDto>().ReverseMap();
+            CreateMap<DataModels.Student, Student>().ReverseMap();
 
-            CreateMap<DataModels.Gender, GenderDto>().ReverseMap();
+            CreateMap<DataModels.Gender, Gender>().ReverseMap();
 
-            CreateMap<DataModels.Address, AddressDto>().ReverseMap();
+            CreateMap<DataModels.Address, Address>().ReverseMap();
 
-            CreateMap<UpdateStudentRequestDto, DataModels.Student>()
+            CreateMap<UpdateStudentRequest, DataModels.Student>()
                 .AfterMap<UpdateStudentRequestAfterMap>();
         }  
     }

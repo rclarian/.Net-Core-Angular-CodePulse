@@ -5,13 +5,13 @@ namespace StudentAdminPortal.API.Repositories
 {
     public interface IStudentRepository
     {
-        Task<List<Student>> GetStudentsAsync();
-        Task<Student> GetStudentAsync(Guid studentId);
+        Task<List<DataModels.Student>> GetStudentsAsync();
+        Task<DataModels.Student> GetStudentAsync(Guid studentId);
 
-        Task<List<Gender>>GetGendersAsync();
+        Task<List<DataModels.Gender>>GetGendersAsync();
 
         Task<bool> Exists(Guid studentId);
 
-        Task<Student> UpdateStudent(Guid studentId, Student request);
+        Task<DataModels.Student> UpdateStudent(Guid studentId, DataModels.Student request);
     }
 }

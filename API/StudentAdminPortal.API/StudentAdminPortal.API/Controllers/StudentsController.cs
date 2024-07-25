@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using DataModels = StudentAdminPortal.API.DataModels;
-using StudentAdminPortal.API.DomainModels;
+using DomainModels = StudentAdminPortal.API.DomainModels;
 using StudentAdminPortal.API.Repositories;
 
 namespace StudentAdminPortal.API.Controllers
@@ -25,7 +25,7 @@ namespace StudentAdminPortal.API.Controllers
         {
             var students = await _studentRepository.GetStudentsAsync();
 
-            return Ok(_mapper.Map<List<StudentDto>>(students));
+            return Ok(_mapper.Map<List<DomainModels.Student>>(students));
         }
 
         //GET: http://localhost:5096/Students/99cfc907-1bbf-4023-b9a3-1151b2a487c2
@@ -42,7 +42,7 @@ namespace StudentAdminPortal.API.Controllers
                 return NotFound();
             }
 
-            var result = _mapper.Map<StudentDto>(student);
+            var result = _mapper.Map<DomainModels.Student>(student);
 
             return Ok(result);
         }
@@ -50,17 +50,14 @@ namespace StudentAdminPortal.API.Controllers
         //PUT: http://localhost:5096/Students/99cfc907-1bbf-4023-b9a3-1151b2a487c2
         [HttpPut]
         [Route("[controller]/{studentId:guid}")]
-        public async Task<IActionResult> UpdateStudentAsync([FromRoute] Guid studentId, [FromBody] UpdateStudentRequestDto request)
+        public async Task<IActionResult> UpdateStudentAsync([FromRoute] Guid studentId, [FromBody] DomainModels.UpdateStudentRequest request)
         {
             if (await _studentRepository.Exists(studentId))
             {
-                //Update Details
-                var student = _mapper.Map<DataModels.Student>(request);
-
-                var updateStuedent = _studentRepository.UpdateStudent(studentId, student);
+                var updateStuedent = await _studentRepository.UpdateStudent(studentId, _mapper.Map<DataModels.Student>(request));
                 if (updateStuedent != null)
                 {
-                    return Ok(_mapper.Map<StudentDto>(student));
+                    return Ok(_mapper.Map<DomainModels.Student>(updateStuedent));
                 }
             }
             return NotFound();

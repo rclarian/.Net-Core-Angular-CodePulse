@@ -1,6 +1,6 @@
 ﻿namespace StudentAdminPortal.API.DomainModels
 {
-    public class UpdateStudentRequestDto
+    public class UpdateStudentRequest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -49,9 +49,6 @@ namespace StudentAdminPortal.API.Repositories
                 existingStudent.Address.PhysicalAddress = request.Address.PhysicalAddress;
                 existingStudent.Address.PostalAddress = request.Address.PostalAddress;
 
-                //Update Student
-                _dbContext.Entry(existingStudent).CurrentValues.SetValues(existingStudent);
-
                 await _dbContext.SaveChangesAsync();
                 return existingStudent;
             }
