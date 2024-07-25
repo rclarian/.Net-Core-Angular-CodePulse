@@ -19,6 +19,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   genderSubscription?: Subscription = new Subscription();
   updateStudentSubscription?: Subscription = new Subscription();
   deleteStudentSubscription?: Subscription = new Subscription();
+  addStudentSubscription?: Subscription = new Subscription();
   studentId?: string | null;
   genderList: Gender[] = [];
   isNewStudent: boolean = false;
@@ -63,16 +64,6 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
             this.isNewStudent = true;
             this.header = 'Add New Student';
 
-            this.genderSubscription = this.genderService.getGenderList()
-              .subscribe({
-                next: (res) => {
-                  this.genderList = res;
-                },
-                error: (err) => {
-                  console.log('Error on getGenderList' + err);
-                }
-              });
-
           }else{
             // -> Existing Student Functionality
             this.isNewStudent = false;
@@ -86,8 +77,9 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                 console.log('Error on getStudent' + err);
               }
             });
+          }
 
-            this.genderSubscription = this.genderService.getGenderList()
+          this.genderSubscription = this.genderService.getGenderList()
               .subscribe({
                 next: (res) => {
                   this.genderList = res;
@@ -96,7 +88,6 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                   console.log('Error on getGenderList' + err);
                 }
               });
-          }
         }
       },
       error: (err) => {
@@ -106,7 +97,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   }
 
   onAdd(): void{
-    this.studentService.addStudent(this.student)
+    this.addStudentSubscription = this.studentService.addStudent(this.student)
       .subscribe({
         next: (res) => {
           this.snackbar.open('Student Added successfull', undefined, {
@@ -169,6 +160,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     this.genderSubscription?.unsubscribe();
     this.updateStudentSubscription?.unsubscribe();
     this.deleteStudentSubscription?.unsubscribe();
+    this.addStudentSubscription?.unsubscribe();
   }
 
 
