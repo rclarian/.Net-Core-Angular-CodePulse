@@ -109,13 +109,13 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     this.studentService.addStudent(this.student)
       .subscribe({
         next: (res) => {
-          // this.snackbar.open('Student Added successfull', undefined, {
-          //   duration: 2000
-          // });
+          this.snackbar.open('Student Added successfull', undefined, {
+            duration: 2000
+          });
 
-          // setTimeout(() => {
-          //   this.router?.navigateByUrl('/students');
-          // }, 2000);
+          setTimeout(() => {
+            this.router?.navigateByUrl(`/students/${res.id}`);
+          }, 2000);
         },
         error: (err) => {
           console.log('Error on addStudent' + err);
