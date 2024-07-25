@@ -21,6 +21,8 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   deleteStudentSubscription?: Subscription = new Subscription();
   studentId?: string | null;
   genderList: Gender[] = [];
+  isNewStudent: boolean = false;
+  header: string = '';
 
   student: Student = {
     id: '',
@@ -56,7 +58,28 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
         this.studentId = params.get('id');
 
         if(this.studentId){
-          this.studentSubscription = this.studentService.getStudent(this.studentId)
+          if(this.studentId.toLocaleLowerCase() === 'Add'.toLocaleLowerCase()){
+            // -> new Student Functionality
+            this.isNewStudent = true;
+            this.header = 'Add New Student';
+
+
+
+            this.genderSubscription = this.genderService.getGenderList()
+              .subscribe({
+                next: (res) => {
+                  this.genderList = res;
+                },
+                error: (err) => {
+                  console.log('Error on getGenderList' + err);
+                }
+              });
+
+          }else{
+            // -> Existing Student Functionality
+            this.isNewStudent = false;
+            this.header = 'Edit Student';
+            this.studentSubscription = this.studentService.getStudent(this.studentId)
             .subscribe({
               next: (res) => {
                 this.student = res;
@@ -75,13 +98,17 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                   console.log('Error on getGenderList' + err);
                 }
               });
+          }
         }
-
       },
       error: (err) => {
         console.log('Error on paramMap' + err);
       }
     });
+  }
+
+  onAdd(): void{
+
   }
 
   onUpdate(): void{
