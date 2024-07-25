@@ -18,6 +18,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   studentSubscription?: Subscription = new Subscription();
   genderSubscription?: Subscription = new Subscription();
   updateStudentSubscription?: Subscription = new Subscription();
+  deleteStudentSubscription?: Subscription = new Subscription();
   studentId?: string | null;
   genderList: Gender[] = [];
 
@@ -90,7 +91,11 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           this.snackbar.open('Student updated successfull', undefined, {
             duration: 2000
           });
-          this.router?.navigateByUrl('/students');
+
+          setTimeout(() => {
+            this.router?.navigateByUrl('/students');
+          }, 2000);
+          
         },
         error: (err) => {
           console.log('Error on updateStudent' + err);
@@ -99,7 +104,22 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   }
 
   onDelete(){
-    
+    this.deleteStudentSubscription = this.studentService.deleteStudent(this.studentId)
+      .subscribe({
+        next: (res) => {
+          this.snackbar.open('Student DELETED successfull', undefined, {
+            duration: 2000
+          });
+
+          setTimeout(() => {
+            this.router?.navigateByUrl('/students');
+          }, 2000);
+          
+        },
+        error: (err) => {
+          console.log('Error on deleteStudent' + err);
+        }
+      })
   }
 
   ngOnDestroy(): void {
@@ -107,6 +127,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     this.studentSubscription?.unsubscribe();
     this.genderSubscription?.unsubscribe();
     this.updateStudentSubscription?.unsubscribe();
+    this.deleteStudentSubscription?.unsubscribe();
   }
 
 
