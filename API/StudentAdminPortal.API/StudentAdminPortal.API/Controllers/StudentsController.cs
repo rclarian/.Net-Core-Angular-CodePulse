@@ -30,7 +30,7 @@ namespace StudentAdminPortal.API.Controllers
 
         //GET: http://localhost:5096/Students/99cfc907-1bbf-4023-b9a3-1151b2a487c2
         [HttpGet]
-        [Route("[controller]/{studentId:guid}")]
+        [Route("[controller]/{studentId:guid}"), ActionName("GetStudentAsync")]
         public async Task<IActionResult> GetStudentAsync([FromRoute] Guid studentId)
         {
             //Fetch Student Details
@@ -76,6 +76,17 @@ namespace StudentAdminPortal.API.Controllers
             }
 
             return NotFound();
+        }
+
+        //Post: http://localhost:5096/Students/Add
+        [HttpPost]
+        [Route("[controller]/Add")]
+        public async Task<IActionResult> AddStudentAsync([FromBody] DomainModels.AddStudentRequest request)
+        {
+            var student = await _studentRepository.AddStudent(_mapper.Map<DataModels.Student>(request));
+            return CreatedAtAction(nameof(GetStudentAsync)
+                , new { studentId = student.Id }
+                , _mapper.Map<DomainModels.Student>(student));
         }
 
 
