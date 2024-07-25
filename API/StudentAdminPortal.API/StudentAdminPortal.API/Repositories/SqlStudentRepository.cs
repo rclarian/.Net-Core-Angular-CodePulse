@@ -19,9 +19,13 @@ namespace StudentAdminPortal.API.Repositories
 
         public async Task<Student> GetStudentAsync(Guid studentId)
         {
-            return await _dbContext.Student
-                .Include(nameof(Gender)).Include(nameof(Address))
-                .FirstOrDefaultAsync(x => x.Id == studentId);
+            var student = await _dbContext.Student.Include(nameof(Gender)).Include(nameof(Address)).FirstOrDefaultAsync(x => x.Id == studentId);
+
+            if (student != null)
+            {
+                return student;
+            }
+            return null;
         }
 
         public async Task<List<Gender>> GetGendersAsync()
@@ -51,6 +55,18 @@ namespace StudentAdminPortal.API.Repositories
 
                 await _dbContext.SaveChangesAsync();
                 return existingStudent;
+            }
+            return null;
+        }
+
+        public async Task<Student> DeleteStudent(Guid studentId)
+        {
+            var student = await GetStudentAsync(studentId);
+            if (student != null) 
+            {
+                _dbContext.Student.Remove(student);
+                await _dbContext.SaveChangesAsync();
+                return student;
             }
             return null;
         }
