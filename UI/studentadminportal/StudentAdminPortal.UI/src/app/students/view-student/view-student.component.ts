@@ -98,6 +98,10 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
       });
   }
 
+  onDelete(){
+    
+  }
+
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
     this.studentSubscription?.unsubscribe();
