@@ -104,7 +104,8 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   }
 
   onDelete(){
-    this.deleteStudentSubscription = this.studentService.deleteStudent(this.studentId)
+    if(confirm('Are you sure to Delete the student?')){
+      this.deleteStudentSubscription = this.studentService.deleteStudent(this.studentId)
       .subscribe({
         next: (res) => {
           this.snackbar.open('Student DELETED successfull', undefined, {
@@ -120,6 +121,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           console.log('Error on deleteStudent' + err);
         }
       })
+    }
   }
 
   ngOnDestroy(): void {
