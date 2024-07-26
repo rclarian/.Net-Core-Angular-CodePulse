@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using StudentAdminPortal.API.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,27 @@ builder.Services.AddScoped<IImageRepository, LocalStorageImageRepository>();
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+// Add services to the container.
+//builder.Services.AddControllers();
+
+//builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
+
+// Register FluentValidation
+//builder.Services.AddFluentValidation(fv =>
+//{
+//    // Optionally enable automatic validation of controllers' actions parameters.
+//    fv.AutomaticValidationEnabled = true;
+//    // Optionally disable the built-in DataAnnotations-based validation.
+//    fv.DisableDataAnnotationsValidation = true;
+//});
+
+// Configure FluentValidation
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+
+// Register your validators here
+builder.Services.AddValidatorsFromAssemblyContaining<AddStudentRequestValidator>();
 
 var app = builder.Build();
 

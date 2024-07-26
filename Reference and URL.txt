@@ -139,6 +139,10 @@ Please install the below nuget packages
 AutoMapper version 12.0.0
 AutoMapper.Extensions.Microsoft.DependencyInjection version 12.0.0
 
+--FluentValidation.aspnetcore
+FluentValidation.aspnetcore
+
+
 --npm insatll jwt-decode
 npm install jwt-decode
 
