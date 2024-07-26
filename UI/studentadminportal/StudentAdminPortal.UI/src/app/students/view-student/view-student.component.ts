@@ -24,6 +24,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   genderList: Gender[] = [];
   isNewStudent: boolean = false;
   header: string = '';
+  displayProfileImageUrl: string = '';
 
   student: Student = {
     id: '',
@@ -63,7 +64,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
             // -> new Student Functionality
             this.isNewStudent = true;
             this.header = 'Add New Student';
-
+            this.setImage();
           }else{
             // -> Existing Student Functionality
             this.isNewStudent = false;
@@ -72,9 +73,11 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
             .subscribe({
               next: (res) => {
                 this.student = res;
+                this.setImage();
               },
               error: (err) => {
                 console.log('Error on getStudent' + err);
+                this.setImage();
               }
             });
           }
@@ -151,6 +154,16 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           console.log('Error on deleteStudent' + err);
         }
       })
+    }
+  }
+
+  private setImage(): void{
+    if(this.student.profileImageUrl){
+      // Fetch the image by url
+      this.displayProfileImageUrl = '/assets/user.png';
+    }else{
+      // Display a default
+      this.displayProfileImageUrl = '/assets/user.png';
     }
   }
 
