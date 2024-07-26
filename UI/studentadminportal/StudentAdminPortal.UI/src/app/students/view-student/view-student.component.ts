@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { StudentService } from '../student.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { Student } from '../../models/ui-models/student.model';
 import { GenderService } from '../../services/gender.service';
 import { Gender } from '../../models/ui-models/gender.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-view-student',
@@ -27,6 +28,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   isNewStudent: boolean = false;
   header: string = '';
   displayProfileImageUrl: string = '';
+  @ViewChild('studentDetailsForm') studentDetailsForm?: NgForm;
 
   student: Student = {
     id: '',
@@ -78,7 +80,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                 this.setImage();
               },
               error: (err) => {
-                console.log('Error on getStudent' + err);
+                console.log(err);
                 this.setImage();
               }
             });
@@ -90,19 +92,21 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
                   this.genderList = res;
                 },
                 error: (err) => {
-                  console.log('Error on getGenderList' + err);
+                  console.log(err);
                 }
               });
         }
       },
       error: (err) => {
-        console.log('Error on paramMap' + err);
+        console.log(err);
       }
     });
   }
 
   onAdd(): void{
-    this.addStudentSubscription = this.studentService.addStudent(this.student)
+    if(this.studentDetailsForm?.form.valid){
+      //Submit data to API
+      this.addStudentSubscription = this.studentService.addStudent(this.student)
       .subscribe({
         next: (res) => {
           this.snackbar.open('Student Added successfull', undefined, {
@@ -117,10 +121,12 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           console.log(err);
         }
       });
+    }
   }
 
   onUpdate(): void{
-    this.updateStudentSubscription = this.studentService.updateStudent(this.studentId, this.student)
+    if(this.studentDetailsForm?.form.valid){
+      this.updateStudentSubscription = this.studentService.updateStudent(this.studentId, this.student)
       .subscribe({
         next: (res) => {
           this.snackbar.open('Student updated successfull', undefined, {
@@ -136,6 +142,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           console.log(err);
         }
       });
+    }
   }
 
   onDelete(){
@@ -153,7 +160,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           
         },
         error: (err) => {
-          console.log('Error on deleteStudent' + err);
+          console.log(err);
         }
       })
     }
@@ -196,7 +203,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
 
           },
           error: (err) => {
-            console.log('Error on uploadImage' + err);
+            console.log(err);
           }
         });
     }
