@@ -19,6 +19,7 @@ builder.Services.AddDbContext<StudentAdminContext>(option =>
 
 //Implemention/Interface injection
 builder.Services.AddScoped<IStudentRepository, SqlStudentRepository>();
+builder.Services.AddScoped<IImageRepository, LocalStorageImageRepository>();
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
