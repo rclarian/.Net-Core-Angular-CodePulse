@@ -167,6 +167,13 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     }
   }
 
+  uploadImage(event: any):void{
+    if(this.studentId){
+      const file: File = event.target.file[0];
+      
+    }
+  }
+
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
     this.studentSubscription?.unsubscribe();
