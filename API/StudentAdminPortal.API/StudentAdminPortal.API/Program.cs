@@ -28,26 +28,13 @@ builder.Services.AddScoped<IImageRepository, LocalStorageImageRepository>();
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-// Add services to the container.
-//builder.Services.AddControllers();
-
-//builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
-
-// Register FluentValidation
-//builder.Services.AddFluentValidation(fv =>
-//{
-//    // Optionally enable automatic validation of controllers' actions parameters.
-//    fv.AutomaticValidationEnabled = true;
-//    // Optionally disable the built-in DataAnnotations-based validation.
-//    fv.DisableDataAnnotationsValidation = true;
-//});
-
 // Configure FluentValidation
 builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
 // Register your validators here
 builder.Services.AddValidatorsFromAssemblyContaining<AddStudentRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentRequestValidator>();
 
 var app = builder.Build();
 

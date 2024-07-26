@@ -114,7 +114,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           }, 2000);
         },
         error: (err) => {
-          console.log('Error on addStudent' + err);
+          console.log(err);
         }
       });
   }
@@ -133,7 +133,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
           
         },
         error: (err) => {
-          console.log('Error on updateStudent' + err);
+          console.log(err);
         }
       });
   }
