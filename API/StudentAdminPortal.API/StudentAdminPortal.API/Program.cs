@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.Repositories;
 
@@ -43,6 +44,12 @@ options.WithOrigins("http://localhost:4200")
 
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+    RequestPath = "/Resources"
+});
 
 app.MapControllers();
 
