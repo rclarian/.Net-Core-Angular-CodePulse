@@ -66,4 +66,8 @@ export class StudentService {
       });
   }
 
+  getImagePath(relativePath: string) {
+    return `${this.baseApiUrl}/${relativePath}`;
+  }
+
 }

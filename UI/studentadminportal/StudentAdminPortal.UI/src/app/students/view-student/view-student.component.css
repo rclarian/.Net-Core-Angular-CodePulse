@@ -11,8 +11,8 @@
 }
 
 .image-container{
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     background-color: #f7f7f7;
     border: 2px solid #ccc;
     border-radius: 50%;
@@ -23,5 +23,5 @@
 }
 
 .image-container img {
-    width: 200;
+    width: 150;
 }

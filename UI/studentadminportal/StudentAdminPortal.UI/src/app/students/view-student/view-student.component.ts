@@ -20,6 +20,8 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   updateStudentSubscription?: Subscription = new Subscription();
   deleteStudentSubscription?: Subscription = new Subscription();
   addStudentSubscription?: Subscription = new Subscription();
+  uploadImageSubscription?: Subscription = new Subscription();
+
   studentId?: string | null;
   genderList: Gender[] = [];
   isNewStudent: boolean = false;
@@ -160,17 +162,43 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
   private setImage(): void{
     if(this.student.profileImageUrl){
       // Fetch the image by url
-      this.displayProfileImageUrl = '/assets/user.png';
+      if(this.student.profileImageUrl === 'profileimage.jpg'){
+        this.displayProfileImageUrl = '/assets/user.png';
+      }else{
+        this.displayProfileImageUrl = this.studentService.getImagePath(this.student.profileImageUrl);
+      }
     }else{
       // Display a default
       this.displayProfileImageUrl = '/assets/user.png';
     }
   }
 
-  uploadImage(event: any):void{
+  uploadImage(event: Event):void{
     if(this.studentId){
-      const file: File = event.target.file[0];
-      
+      const inputElement = event.target as HTMLInputElement;
+
+      if (!inputElement || !inputElement.files || inputElement.files.length === 0) {
+        console.log('No files selected');
+        return;
+      }
+
+      const file = inputElement.files[0];
+
+      this.uploadImageSubscription = this.studentService.uploadImage(this.student.id, file)
+        .subscribe({
+          next: (res) => {
+            this.student.profileImageUrl = res;
+            this.setImage();
+
+            this.snackbar.open('Profile Image Updated Successfull', undefined, {
+              duration: 2000
+            });
+
+          },
+          error: (err) => {
+            console.log('Error on uploadImage' + err);
+          }
+        });
     }
   }
 
@@ -181,6 +209,7 @@ export class ViewStudentComponent implements OnInit, OnDestroy {
     this.updateStudentSubscription?.unsubscribe();
     this.deleteStudentSubscription?.unsubscribe();
     this.addStudentSubscription?.unsubscribe();
+    this.uploadImageSubscription?.unsubscribe();
   }
 
 
